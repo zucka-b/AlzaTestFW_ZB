@@ -7,23 +7,20 @@ namespace AlzaTestFW_ZB.Tests
 {
     public abstract class BaseTest
     {
-        internal WebDriverManager manager;
-        private String URL;
+        protected IWebDriver driver;
 
         protected BaseTest()
         {
         }
 
-        public IWebDriver setDriver()
-        {
-            WebDriverManager manager = new WebDriverManager();
-            this.URL = "https://www.alza.cz/";
-            var driver = manager.runWebDriver();
-            driver.Navigate().GoToUrl(URL);
-            return driver;
+        [SetUp]
+        public void setDriver()
+        {           
+            driver = new WebDriverManager().runWebDriver();
         }
 
-        public void removeDriver(IWebDriver driver)
+        [TearDown]
+        public void removeDriver()
         {
             driver.Close();
             driver.Quit();

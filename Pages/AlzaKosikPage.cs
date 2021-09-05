@@ -1,109 +1,112 @@
 ﻿using OpenQA.Selenium;
 using System;
-using OpenQA.Selenium.Support.UI;
-using System.Threading;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace AlzaTestFW_ZB.Pages
 {
-    class AlzaKosikPage
+    class AlzaKosikPage : AlzaBasePage
     {
 
-        IWebDriver driver;
-
-        public AlzaKosikPage(IWebDriver webDriver)
+        public AlzaKosikPage(IWebDriver webDriver) : base(webDriver)
         {
             driver = webDriver;
         }
 
-        By pokracovat_button = By.LinkText("Pokračovat");
-        By nepridavatNic_button = By.LinkText("Nepřidávat nic");
-        By showRoom_checkBox = By.XPath(".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/input");
-        By standardniVydej_radioButton = By.XPath(".//div[contains(text(),'Standardní výdej')]/parent::div/preceding-sibling::div[@class='inputContainer']/input");
-        By potvrditVolbu_button = By.LinkText("Potvrdit volbu");
-        By hotoveKartou_checkBox = By.XPath(".//div[contains(text(),'Hotově / kartou(při vyzvednutí)')]/parent::div/preceding-sibling::div[@class='paymentCheckboxContainer']/input");
-        By email_textField = By.Id("userEmail");
-        By telefon_textField = By.Id("inpTelNumber");
-        By doplnitFakturacniUdaje_checkBox = By.XPath(".//span[text()='Chci doplnit fakturační údaje']/preceding-sibling::label");
-        By jmenoAPrijmeni_textField = By.Id("name");
-        By uliceACisloPopisne_textField = By.Id("street");
-        By mesto_textField = By.Id("city");
-        By psc_textField = By.Id("zip");
+        [FindsBy(How = How.LinkText, Using = "Pokračovat")]
+        private IWebElement pokracovat_button { get; set; }
+        [FindsBy(How = How.LinkText, Using = "Nepřidávat nic")]
+        private IWebElement nepridavatNic_button { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/input")]
+        private IWebElement showRoom_checkBox { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Standardní výdej')]/parent::div/preceding-sibling::div[@class='inputContainer']/input")]
+        private IWebElement standardniVydej_radioButton { get; set; }
+        [FindsBy(How = How.LinkText, Using = "Potvrdit volbu")]
+        private IWebElement potvrditVolbu_button { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Hotově / kartou(při vyzvednutí)')]/parent::div/preceding-sibling::div[@class='paymentCheckboxContainer']/input")]
+        private IWebElement hotoveKartou_checkBox { get; set; }
+        [FindsBy(How = How.Id, Using = "userEmail")]
+        private IWebElement email_textField { get; set; }
+        [FindsBy(How = How.Id, Using = "inpTelNumber")]
+        private IWebElement telefon_textField { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//span[text()='Chci doplnit fakturační údaje']/preceding-sibling::label")]
+        private IWebElement doplnitFakturacniUdaje_checkBox { get; set; }
+        [FindsBy(How = How.Id, Using = "name")]
+        private IWebElement jmenoAPrijmeni_textField { get; set; }
+        [FindsBy(How = How.Id, Using = "street")]
+        private IWebElement uliceACisloPopisne_textField { get; set; }
+        [FindsBy(How = How.Id, Using = "city")]
+        private IWebElement mesto_textField { get; set; }
+        [FindsBy(How = How.Id, Using = "zip")]
+        private IWebElement psc_textField { get; set; }
 
 
         public AlzaKosikPage clickOnPokracovatButton()
         {
-            driver.FindElement(pokracovat_button).Click();
-            if (driver.FindElements(nepridavatNic_button).Count > 0)
+            pokracovat_button.Click();
+            if (nepridavatNic_button.Displayed)
             {
-                driver.FindElement(nepridavatNic_button).Click();
+                nepridavatNic_button.Click();
             }
             return this;
         }
 
         public AlzaKosikPage clickOnAlzaShowRoomCheckBox()
         {
-            driver.FindElement(showRoom_checkBox).Click();
+           showRoom_checkBox.Click();
             return this;
         }
 
         public AlzaKosikPage clickOnStandardniVydejRadioButton()
         {
-            driver.FindElement(standardniVydej_radioButton).Click();
-            if (driver.FindElements(potvrditVolbu_button).Count > 0)
+            standardniVydej_radioButton.Click();
+            if (potvrditVolbu_button.Displayed)
             {
-                driver.FindElement(potvrditVolbu_button).Click();
+                potvrditVolbu_button.Click();
             }
             return this;
         }
 
         public AlzaKosikPage clickOnHotoveKartouPriVyzvednutiCheckBox()
         {
-            driver.FindElement(hotoveKartou_checkBox).Click();
+            hotoveKartou_checkBox.Click();
             return this;
         }
 
         public AlzaKosikPage inputEmail(String email)
         {
-            driver.FindElement(email_textField).SendKeys(email);
+           email_textField.SendKeys(email);
             return this;
         }
 
         public AlzaKosikPage inputTelefon(String telefon)
         {
-            driver.FindElement(telefon_textField).SendKeys(telefon);
+            telefon_textField.SendKeys(telefon);
             return this;
         }
 
         public AlzaKosikPage clickOnChciDoplnitFakturacniUdajeCheckBox()
         {
-            driver.FindElement(doplnitFakturacniUdaje_checkBox).Click();
+            doplnitFakturacniUdaje_checkBox.Click();
             return this;
         }
 
         public AlzaKosikPage inputFakturacniUdaje(String name, String street, String city, String postCode)
         {
-            driver.FindElement(jmenoAPrijmeni_textField).SendKeys(name);
-            driver.FindElement(uliceACisloPopisne_textField).SendKeys(street);
-            driver.FindElement(mesto_textField).SendKeys(city);
-            driver.FindElement(psc_textField).SendKeys(postCode);
+            jmenoAPrijmeni_textField.SendKeys(name);
+            uliceACisloPopisne_textField.SendKeys(street);
+            mesto_textField.SendKeys(city);
+            psc_textField.SendKeys(postCode);
             return this;
         }
 
         public Boolean checkInputDataAreValid()
         {
-            IWebElement element1 = driver.FindElement(email_textField);
-            IWebElement element2 = driver.FindElement(telefon_textField);
-            IWebElement element3 = driver.FindElement(psc_textField);
+            return (checkElementInputIsValid(email_textField) && checkElementInputIsValid(telefon_textField) && checkElementInputIsValid(psc_textField));
+        }
 
-            if (element1.GetAttribute("class").Contains("valid") && element2.GetAttribute("class").Contains("valid") && element3.GetAttribute("class").Contains("valid"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+        private Boolean checkElementInputIsValid(IWebElement element)
+        {
+            return element.GetAttribute("class").Contains("valid");
         }
 
     }

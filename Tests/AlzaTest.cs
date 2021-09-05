@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using AlzaTestFW_ZB.Pages;
 using AlzaTestFW_ZB.Tests;
 
@@ -12,9 +10,8 @@ namespace AlzaTestFW_ZB
         [Test]
         public void testCheapestProductInCategory()
         {
-            var driver = setDriver();
-            AlzaKatalogPage alzaPage = new AlzaKatalogPage(driver);
-            AlzaKosikPage alzaKosikPage = alzaPage
+            AlzaKosikPage alzaKosikPage = new AlzaBasePage(driver)
+                .openUrl()
                 .clickOnChosenCategory("Notebooky a tablety")
                 .clickOnOdNejlevnejsihoTabButton()
                 .clickOnKoupitFirstProductButton()
@@ -29,8 +26,6 @@ namespace AlzaTestFW_ZB
                 .clickOnChciDoplnitFakturacniUdajeCheckBox()
                 .inputFakturacniUdaje("Random Name", "Random Street 42", "Random City", "66600");
             Assert.That(alzaKosikPage.checkInputDataAreValid, "Input data are not valid, your order cannot be completed!");
-
-            removeDriver(driver);
         }
 
     }

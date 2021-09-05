@@ -13,7 +13,7 @@ namespace AlzaTestFW_ZB.Utils
 
         internal WebDriverManager(WebDriverFactory factory)
         {
-            this.webDriverFactory = factory;
+            webDriverFactory = factory;
         }
       
         public IWebDriver runWebDriver()
