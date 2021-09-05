@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using System;
 
 namespace AlzaTestFW_ZB.Pages
 {
@@ -13,6 +14,17 @@ namespace AlzaTestFW_ZB.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-
+        public Boolean checkIfElementExists(String elementText)
+        {
+            try
+            {
+                driver.FindElement(By.LinkText(elementText));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
     }
 }

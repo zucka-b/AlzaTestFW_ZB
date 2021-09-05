@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
 
 namespace AlzaTestFW_ZB.Pages
 {
@@ -16,7 +16,7 @@ namespace AlzaTestFW_ZB.Pages
         private IWebElement pokracovat_button { get; set; }
         [FindsBy(How = How.LinkText, Using = "Nepřidávat nic")]
         private IWebElement nepridavatNic_button { get; set; }
-        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/input")]
+        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label")]
         private IWebElement showRoom_checkBox { get; set; }
         [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Standardní výdej')]/parent::div/preceding-sibling::div[@class='inputContainer']/input")]
         private IWebElement standardniVydej_radioButton { get; set; }
@@ -39,13 +39,17 @@ namespace AlzaTestFW_ZB.Pages
         [FindsBy(How = How.Id, Using = "zip")]
         private IWebElement psc_textField { get; set; }
 
+        [FindsBy(How = How.Id, Using = "_hjRemoteVarsFrame")]
+        private IWebElement frame { get; set; }
 
         public AlzaKosikPage clickOnPokracovatButton()
         {
             pokracovat_button.Click();
-            if (nepridavatNic_button.Displayed)
+            driver.SwitchTo().Frame(frame);
+            if (checkIfElementExists("Nepřidávat nic"))
             {
                 nepridavatNic_button.Click();
+                driver.SwitchTo().Frame(0);
             }
             return this;
         }
@@ -59,7 +63,7 @@ namespace AlzaTestFW_ZB.Pages
         public AlzaKosikPage clickOnStandardniVydejRadioButton()
         {
             standardniVydej_radioButton.Click();
-            if (potvrditVolbu_button.Displayed)
+            if (checkIfElementExists("Potvrdit volbu"))
             {
                 potvrditVolbu_button.Click();
             }

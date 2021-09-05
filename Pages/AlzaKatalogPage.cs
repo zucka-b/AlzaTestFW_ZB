@@ -1,6 +1,6 @@
 ﻿using AlzaTestFW_ZB.Pages;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
 using System;
 
 namespace AlzaTestFW_ZB
@@ -36,7 +36,7 @@ namespace AlzaTestFW_ZB
         public AlzaKatalogPage clickOnKoupitFirstProductButton()
         {
             koupitFirstProduct_button.Click();
-            if (koupitRozbalene_button.Displayed)
+            if (checkIfElementExists("Koupit rozbalené"))
             {
                 koupitRozbalene_button.Click();
             }

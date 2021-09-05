@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
 using System;
 
 namespace AlzaTestFW_ZB.Pages
