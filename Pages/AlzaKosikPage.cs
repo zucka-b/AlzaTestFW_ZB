@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using System;
 using SeleniumExtras.PageObjects;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 
 namespace AlzaTestFW_ZB.Pages
 {
@@ -14,10 +16,10 @@ namespace AlzaTestFW_ZB.Pages
 
         [FindsBy(How = How.LinkText, Using = "Pokračovat")]
         private IWebElement pokracovat_button { get; set; }
-        [FindsBy(How = How.LinkText, Using = "Nepřidávat nic")]
+        [FindsBy(How = How.XPath, Using = ".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']")]
         private IWebElement nepridavatNic_button { get; set; }
-        [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label")]
-        private IWebElement showRoom_checkBox { get; set; }
+        /*[FindsBy(How = How.CssSelector, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label")]
+        private IWebElement showRoom_checkBox { get; set; }*/
         [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Standardní výdej')]/parent::div/preceding-sibling::div[@class='inputContainer']/input")]
         private IWebElement standardniVydej_radioButton { get; set; }
         [FindsBy(How = How.LinkText, Using = "Potvrdit volbu")]
@@ -39,34 +41,30 @@ namespace AlzaTestFW_ZB.Pages
         [FindsBy(How = How.Id, Using = "zip")]
         private IWebElement psc_textField { get; set; }
 
-        [FindsBy(How = How.Id, Using = "_hjRemoteVarsFrame")]
-        private IWebElement frame { get; set; }
 
         public AlzaKosikPage clickOnPokracovatButton()
         {
             pokracovat_button.Click();
-            driver.SwitchTo().Frame(frame);
-            if (checkIfElementExists("Nepřidávat nic"))
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            if (checkIfElementExists(".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']"))
             {
                 nepridavatNic_button.Click();
-                driver.SwitchTo().Frame(0);
             }
             return this;
         }
 
         public AlzaKosikPage clickOnAlzaShowRoomCheckBox()
         {
-           showRoom_checkBox.Click();
+            Actions build = new Actions(driver);
+            build.MoveToElement(driver.FindElement(By.XPath(".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label"))).Click().Build().Perform();
             return this;
         }
 
         public AlzaKosikPage clickOnStandardniVydejRadioButton()
         {
             standardniVydej_radioButton.Click();
-            if (checkIfElementExists("Potvrdit volbu"))
-            {
-                potvrditVolbu_button.Click();
-            }
+            potvrditVolbu_button.Click();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             return this;
         }
 

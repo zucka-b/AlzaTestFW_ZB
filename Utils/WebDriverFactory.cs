@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.IO;
+using System.Reflection;
 
 namespace AlzaTestFW_ZB.Utils
 {
@@ -11,7 +13,7 @@ namespace AlzaTestFW_ZB.Utils
          */
         public IWebDriver createWebDriverInstance()
         {
-            return new ChromeDriver("C:\\Users\\Zucka\\source\\repos\\AlzaTestFW_ZB\\WebDriver\\");
+            return new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
 
 

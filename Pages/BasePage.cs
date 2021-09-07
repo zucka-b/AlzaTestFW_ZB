@@ -14,11 +14,11 @@ namespace AlzaTestFW_ZB.Pages
             PageFactory.InitElements(this.driver, this);
         }
 
-        public Boolean checkIfElementExists(String elementText)
+        public Boolean checkIfElementExists(String xpath)
         {
             try
             {
-                driver.FindElement(By.LinkText(elementText));
+                driver.FindElement(By.XPath(xpath));
                 return true;
             }
             catch (NoSuchElementException)
@@ -26,5 +26,6 @@ namespace AlzaTestFW_ZB.Pages
                 return false;
             }
         }
+
     }
 }

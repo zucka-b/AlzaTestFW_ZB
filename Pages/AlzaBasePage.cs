@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace AlzaTestFW_ZB.Pages
@@ -13,9 +15,6 @@ namespace AlzaTestFW_ZB.Pages
         {
         }
 
-        [FindsBy(How = How.Id, Using = "basketLink")]
-        private IWebElement kosik_button { get; set; }
-
 
         public AlzaKatalogPage openUrl()
         {
@@ -24,7 +23,9 @@ namespace AlzaTestFW_ZB.Pages
         }
         public AlzaKosikPage clickOnKosikButton()
         {
-            kosik_button.Click();
+            Actions build = new Actions(driver);
+            build.MoveToElement(driver.FindElement(By.ClassName("alzaico-f-basket"))).Click().Build().Perform();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             return new AlzaKosikPage(driver);
         }
     }
