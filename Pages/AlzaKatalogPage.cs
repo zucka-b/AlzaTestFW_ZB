@@ -24,23 +24,22 @@ namespace AlzaTestFW_ZB
 
         public AlzaKatalogPage clickOnChosenCategory(String categoryName)
         {
-            notebookyATablety_button.Click();
+            click(notebookyATablety_button);
             return this;
         }
 
         public AlzaKatalogPage clickOnOdNejlevnejsihoTabButton()
         {
-            odNejlevnejsiho_tabButton.Click();
+            click(odNejlevnejsiho_tabButton);
             return this;
         }
 
         public AlzaKatalogPage clickOnKoupitFirstProductButton()
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            koupitFirstProduct_button.Click();
+        { 
+            click(koupitFirstProduct_button);
             if (checkIfElementExists(".//div[@class='alzaDialogButtons']/span[contains(text(),'Koupit')]"))
             {
-                koupitInPopup_button.Click();
+                click(koupitInPopup_button);
             }
             return this;
         }

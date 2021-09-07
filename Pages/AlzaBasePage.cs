@@ -21,11 +21,10 @@ namespace AlzaTestFW_ZB.Pages
             driver.Navigate().GoToUrl(URL);
             return new AlzaKatalogPage(driver);
         }
+
         public AlzaKosikPage clickOnKosikButton()
         {
-            Actions build = new Actions(driver);
-            build.MoveToElement(driver.FindElement(By.ClassName("alzaico-f-basket"))).Click().Build().Perform();
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            click(By.ClassName("alzaico-f-basket"));
             return new AlzaKosikPage(driver);
         }
     }

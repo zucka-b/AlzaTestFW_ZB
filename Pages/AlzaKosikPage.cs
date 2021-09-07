@@ -18,8 +18,6 @@ namespace AlzaTestFW_ZB.Pages
         private IWebElement pokracovat_button { get; set; }
         [FindsBy(How = How.XPath, Using = ".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']")]
         private IWebElement nepridavatNic_button { get; set; }
-        /*[FindsBy(How = How.CssSelector, Using = ".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label")]
-        private IWebElement showRoom_checkBox { get; set; }*/
         [FindsBy(How = How.XPath, Using = ".//div[contains(text(),'Standardní výdej')]/parent::div/preceding-sibling::div[@class='inputContainer']/input")]
         private IWebElement standardniVydej_radioButton { get; set; }
         [FindsBy(How = How.LinkText, Using = "Potvrdit volbu")]
@@ -28,8 +26,10 @@ namespace AlzaTestFW_ZB.Pages
         private IWebElement hotoveKartou_checkBox { get; set; }
         [FindsBy(How = How.Id, Using = "userEmail")]
         private IWebElement email_textField { get; set; }
-        [FindsBy(How = How.Id, Using = "inpTelNumber")]
+
+        [FindsBy(How = How.XPath, Using = ".//div[@class='blPhoneCountryPrefix']/input[@id='inpTelNumber']")]
         private IWebElement telefon_textField { get; set; }
+
         [FindsBy(How = How.XPath, Using = ".//span[text()='Chci doplnit fakturační údaje']/preceding-sibling::label")]
         private IWebElement doplnitFakturacniUdaje_checkBox { get; set; }
         [FindsBy(How = How.Id, Using = "name")]
@@ -44,60 +44,68 @@ namespace AlzaTestFW_ZB.Pages
 
         public AlzaKosikPage clickOnPokracovatButton()
         {
-            pokracovat_button.Click();
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+            click(pokracovat_button);
             if (checkIfElementExists(".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']"))
             {
-                nepridavatNic_button.Click();
+                 click(nepridavatNic_button);
             }
             return this;
         }
 
         public AlzaKosikPage clickOnAlzaShowRoomCheckBox()
         {
-            Actions build = new Actions(driver);
-            build.MoveToElement(driver.FindElement(By.XPath(".//div[contains(text(),'Showroom')]/parent::div/preceding-sibling::div[@class='deliveryCheckboxContainer']/label"))).Click().Build().Perform();
+            //pseudo
+            click(By.XPath(".//label[@for=\"deliveryCheckbox-595\"]"));
             return this;
         }
 
         public AlzaKosikPage clickOnStandardniVydejRadioButton()
         {
-            standardniVydej_radioButton.Click();
-            potvrditVolbu_button.Click();
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+            click(standardniVydej_radioButton);
+            click(potvrditVolbu_button);
             return this;
         }
 
         public AlzaKosikPage clickOnHotoveKartouPriVyzvednutiCheckBox()
         {
-            hotoveKartou_checkBox.Click();
+            //pseudo
+            click(By.XPath(".//div[@id='paymentContainer-101']"));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
             return this;
         }
 
         public AlzaKosikPage inputEmail(String email)
         {
-           email_textField.SendKeys(email);
+            input(email_textField,email);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            
             return this;
         }
 
         public AlzaKosikPage inputTelefon(String telefon)
         {
-            telefon_textField.SendKeys(telefon);
+            waitForElementToBePseudo(By.XPath("//*[@class='inputLabel required'][@for='inpTelNumber']"));
+            click(telefon_textField);
+            input(telefon_textField,telefon);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             return this;
         }
 
         public AlzaKosikPage clickOnChciDoplnitFakturacniUdajeCheckBox()
         {
-            doplnitFakturacniUdaje_checkBox.Click();
+            click(doplnitFakturacniUdaje_checkBox);
             return this;
         }
 
         public AlzaKosikPage inputFakturacniUdaje(String name, String street, String city, String postCode)
         {
-            jmenoAPrijmeni_textField.SendKeys(name);
-            uliceACisloPopisne_textField.SendKeys(street);
-            mesto_textField.SendKeys(city);
-            psc_textField.SendKeys(postCode);
+            input(jmenoAPrijmeni_textField,name);
+            input(uliceACisloPopisne_textField,street);
+            input(mesto_textField,city);
+            input(psc_textField,postCode);
             return this;
         }
 
