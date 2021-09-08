@@ -1,7 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.PageObjects;
-using OpenQA.Selenium.Support.UI;
 using System;
 
 namespace AlzaTestFW_ZB.Pages
@@ -16,15 +13,15 @@ namespace AlzaTestFW_ZB.Pages
         }
 
 
-        public AlzaKatalogPage openUrl()
+        public AlzaKatalogPage OpenUrl()
         {
             driver.Navigate().GoToUrl(URL);
             return new AlzaKatalogPage(driver);
         }
 
-        public AlzaKosikPage clickOnKosikButton()
+        public AlzaKosikPage ClickOnKosikButton()
         {
-            click(By.ClassName("alzaico-f-basket"));
+            ClickPseudoelement(By.Id("basketLink"));
             return new AlzaKosikPage(driver);
         }
     }

@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
 using SeleniumExtras.PageObjects;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace AlzaTestFW_ZB.Pages
@@ -26,10 +25,8 @@ namespace AlzaTestFW_ZB.Pages
         private IWebElement hotoveKartou_checkBox { get; set; }
         [FindsBy(How = How.Id, Using = "userEmail")]
         private IWebElement email_textField { get; set; }
-
         [FindsBy(How = How.XPath, Using = ".//div[@class='blPhoneCountryPrefix']/input[@id='inpTelNumber']")]
         private IWebElement telefon_textField { get; set; }
-
         [FindsBy(How = How.XPath, Using = ".//span[text()='Chci doplnit fakturační údaje']/preceding-sibling::label")]
         private IWebElement doplnitFakturacniUdaje_checkBox { get; set; }
         [FindsBy(How = How.Id, Using = "name")]
@@ -40,81 +37,81 @@ namespace AlzaTestFW_ZB.Pages
         private IWebElement mesto_textField { get; set; }
         [FindsBy(How = How.Id, Using = "zip")]
         private IWebElement psc_textField { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//*[contains(text(),'Zvolte dopravu')]")]
+        private IWebElement zvolteDopravu_label { get; set; }
+        [FindsBy(How = How.XPath, Using = ".//*[contains(text(),'Zvolte platbu')]")]
+        private IWebElement zvoltePlatbu_label { get; set; }
 
 
-        public AlzaKosikPage clickOnPokracovatButton()
+        public AlzaKosikPage ClickOnPokracovatButton()
         {
-
-            click(pokracovat_button);
-            if (checkIfElementExists(".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']"))
+            Click(pokracovat_button);
+            if (CheckIfElementExists(By.XPath(".//div[@class='alzaDialogBody']//span[text()='Nepřidávat nic']")))
             {
-                 click(nepridavatNic_button);
+                 Click(nepridavatNic_button);
             }
             return this;
         }
 
-        public AlzaKosikPage clickOnAlzaShowRoomCheckBox()
+        public AlzaKosikPage ClickOnAlzaShowRoomCheckBox()
         {
-            //pseudo
-            click(By.XPath(".//label[@for=\"deliveryCheckbox-595\"]"));
+            WaitForElementToBePresent(zvolteDopravu_label);
+            ClickPseudoelement(By.XPath(".//div[contains(@id,'deliveryContainer-595')]"));
             return this;
         }
 
-        public AlzaKosikPage clickOnStandardniVydejRadioButton()
+        public AlzaKosikPage ClickOnStandardniVydejRadioButton()
         {
-
-            click(standardniVydej_radioButton);
-            click(potvrditVolbu_button);
+            Click(standardniVydej_radioButton);
+            Click(potvrditVolbu_button);
             return this;
         }
 
-        public AlzaKosikPage clickOnHotoveKartouPriVyzvednutiCheckBox()
+        public AlzaKosikPage ClickOnHotoveKartouPriVyzvednutiCheckBox()
         {
-            //pseudo
-            click(By.XPath(".//div[@id='paymentContainer-101']"));
+            WaitForElementToBePresent(zvoltePlatbu_label);
+            ClickPseudoelement(By.XPath(".//div[@id='paymentContainer-101']"));
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
             return this;
         }
 
-        public AlzaKosikPage inputEmail(String email)
+        public AlzaKosikPage InputEmail(String email)
         {
-            input(email_textField,email);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            
-            return this;
-        }
-
-        public AlzaKosikPage inputTelefon(String telefon)
-        {
-            waitForElementToBePseudo(By.XPath("//*[@class='inputLabel required'][@for='inpTelNumber']"));
-            click(telefon_textField);
-            input(telefon_textField,telefon);
+            Input(email_textField,email);
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             return this;
         }
 
-        public AlzaKosikPage clickOnChciDoplnitFakturacniUdajeCheckBox()
+        public AlzaKosikPage InputTelefon(String telefon)
         {
-            click(doplnitFakturacniUdaje_checkBox);
+            WaitForPseudoElement(By.XPath("//*[@class='inputLabel required'][@for='inpTelNumber']"));
+            Click(telefon_textField);
+            Input(telefon_textField,telefon);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             return this;
         }
 
-        public AlzaKosikPage inputFakturacniUdaje(String name, String street, String city, String postCode)
+        public AlzaKosikPage ClickOnChciDoplnitFakturacniUdajeCheckBox()
         {
-            input(jmenoAPrijmeni_textField,name);
-            input(uliceACisloPopisne_textField,street);
-            input(mesto_textField,city);
-            input(psc_textField,postCode);
+            Click(doplnitFakturacniUdaje_checkBox);
             return this;
         }
 
-        public Boolean checkInputDataAreValid()
+        public AlzaKosikPage InputFakturacniUdaje(String name, String street, String city, String postCode)
         {
-            return (checkElementInputIsValid(email_textField) && checkElementInputIsValid(telefon_textField) && checkElementInputIsValid(psc_textField));
+            Input(jmenoAPrijmeni_textField,name);
+            Input(uliceACisloPopisne_textField,street);
+            Input(mesto_textField,city);
+            Input(psc_textField,postCode);
+            return this;
         }
 
-        private Boolean checkElementInputIsValid(IWebElement element)
+        public Boolean CheckInputDataAreValid()
+        {
+            return (CheckElementInputIsValid(email_textField) && CheckElementInputIsValid(telefon_textField) && CheckElementInputIsValid(psc_textField));
+        }
+
+        private Boolean CheckElementInputIsValid(IWebElement element)
         {
             return element.GetAttribute("class").Contains("valid");
         }

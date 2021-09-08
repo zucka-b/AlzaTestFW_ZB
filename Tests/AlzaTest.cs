@@ -11,21 +11,21 @@ namespace AlzaTestFW_ZB
         public void testCheapestProductInCategory()
         {
             AlzaKosikPage alzaKosikPage = new AlzaBasePage(driver)
-                .openUrl()
-                .clickOnChosenCategory("Notebooky a tablety")
-                .clickOnOdNejlevnejsihoTabButton()
-                .clickOnKoupitFirstProductButton()
-                .clickOnKosikButton()
-                .clickOnPokracovatButton()
-                .clickOnAlzaShowRoomCheckBox()
-                .clickOnStandardniVydejRadioButton()
-                .clickOnHotoveKartouPriVyzvednutiCheckBox()
-                .clickOnPokracovatButton()
-                .inputEmail("random.email@gmail.com")
-                .inputTelefon("606000666")
-                .clickOnChciDoplnitFakturacniUdajeCheckBox()
-                .inputFakturacniUdaje("Random Name", "Random Street 42", "Random City", "66600");
-            Assert.That(alzaKosikPage.checkInputDataAreValid, "Input data are not valid, your order cannot be completed!");
+                .OpenUrl()
+                .ClickOnChosenCategory("Notebooky a tablety")
+                .ClickOnOdNejlevnejsihoTabButton()
+                .ClickOnKoupitFirstProductButton()
+                .ClickOnKosikButton()
+                .ClickOnPokracovatButton()
+                .ClickOnAlzaShowRoomCheckBox()
+                .ClickOnStandardniVydejRadioButton()
+                .ClickOnHotoveKartouPriVyzvednutiCheckBox()
+                .ClickOnPokracovatButton()
+                .InputEmail("random.email@gmail.com")
+                .InputTelefon("606000666")
+                .ClickOnChciDoplnitFakturacniUdajeCheckBox()
+                .InputFakturacniUdaje("Random Name", "Random Street 42", "Random City", "66600");
+            Assert.That(alzaKosikPage.CheckInputDataAreValid, "Input data are not valid, your order cannot be completed!");
         }
 
     }

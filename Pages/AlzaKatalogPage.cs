@@ -22,24 +22,35 @@ namespace AlzaTestFW_ZB
         [FindsBy(How = How.LinkText, Using = "Notebooky a tablety")]
         private IWebElement notebookyATablety_button { get; set; }
 
-        public AlzaKatalogPage clickOnChosenCategory(String categoryName)
-        {
-            click(notebookyATablety_button);
-            return this;
-        }
 
-        public AlzaKatalogPage clickOnOdNejlevnejsihoTabButton()
+        public AlzaKatalogPage ClickOnChosenCategory(String categoryName)
         {
-            click(odNejlevnejsiho_tabButton);
-            return this;
-        }
-
-        public AlzaKatalogPage clickOnKoupitFirstProductButton()
-        { 
-            click(koupitFirstProduct_button);
-            if (checkIfElementExists(".//div[@class='alzaDialogButtons']/span[contains(text(),'Koupit')]"))
+            if (CheckIfElementExists(By.LinkText(categoryName)))
             {
-                click(koupitInPopup_button);
+                Click(By.LinkText(categoryName));
+                return this;
+            }
+            else
+            {
+                throw new Exception("Chosen category is invalid!");
+            }
+        }
+
+        public AlzaKatalogPage ClickOnOdNejlevnejsihoTabButton()
+        {
+            String originalUrl = driver.Url;
+            Click(odNejlevnejsiho_tabButton);
+            WaitForPageToUpdate(originalUrl);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            return this;
+        }
+
+        public AlzaKatalogPage ClickOnKoupitFirstProductButton()
+        { 
+            Click(koupitFirstProduct_button);
+            if (CheckIfElementExists(By.XPath(".//div[@class='alzaDialogButtons']/span[contains(text(),'Koupit')]")))
+            {
+                Click(koupitInPopup_button);
             }
             return this;
         }
